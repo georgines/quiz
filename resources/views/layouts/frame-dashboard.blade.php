@@ -1,5 +1,9 @@
 @extends('layouts.app')
+@section('page-styles')
+    @yield('styles')
+@endsection
 @section('page-content')
+
     <main class="main">
 
         @component('components.preload')
@@ -14,19 +18,24 @@
 
         @endcomponent
 
+
         <section class="content">
             @component('components.content-title')
                 @slot('title')
-                    @yield('page-name')
+                    @yield('title')
                 @endslot
-                @yield('page-message')
+                @yield('message')
             @endcomponent
 
-            @yield('page-content')
+            @yield('content')
 
             @component('components.footer')
             @endcomponent
 
         </section>
     </main>
+@endsection
+
+@section('page-scripts')
+    @yield('scripts')
 @endsection

@@ -17,5 +17,49 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::resource('/inicio', 'DashboardController', [
+    'names' => [
+        'index' => 'dashboard',
+        'store' => 'dashboard.store',
+        'create' => 'dashboard.create',
+        'show' => 'dashboard.show',
+        'destroy' => 'dashboard.destroy',
+        'update' => 'dashboard.update',
+        'edit' => 'dashboard.edit',
+    ],
+    'except' => [
+        'create','store', 'edit', 'update', 'destroy', 'show'
+    ]
+
+]);
+
+Route::resource('/usuarios', 'UserController', [
+    'names' => [
+        'index' => 'user',
+        'store' => 'user.store',
+        'create' => 'user.create',
+        'show' => 'user.show',
+        'destroy' => 'user.destroy',
+        'update' => 'user.update',
+        'edit' => 'user.edit',
+    ],
+    'except' => [
+
+    ]
+]);
+
+Route::resource('/avaliacoes', 'AssessmentsController', [
+    'names' => [
+        'index' => 'Assessments',
+        'store' => 'Assessments.store',
+        'create' => 'Assessments.create',
+        'show' => 'Assessments.show',
+        'destroy' => 'Assessments.destroy',
+        'update' => 'Assessments.update',
+        'edit' => 'Assessments.edit',
+    ],
+    'except' => [
+
+    ]
+]);
 
