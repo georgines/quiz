@@ -13,7 +13,7 @@ class AssessmentsController extends Controller
      */
     public function index()
     {
-        //
+        return view('assessments.index');
     }
 
     /**
@@ -23,7 +23,7 @@ class AssessmentsController extends Controller
      */
     public function create()
     {
-        //
+        return view('assessments.create');
     }
 
     /**
@@ -56,7 +56,7 @@ class AssessmentsController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('assessments.edit');
     }
 
     /**

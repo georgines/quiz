@@ -37,5 +37,11 @@
 @endsection
 
 @section('page-scripts')
+    <script>
+        $("#disparar").click(function () {
+            $("#alvo").submit();
+            console.log("teste");
+        });
+    </script>
     @yield('scripts')
 @endsection

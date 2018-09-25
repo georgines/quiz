@@ -4,11 +4,11 @@
 @endsection
 
 @section('title')
-    Usuários
+    Lista de  Questões
 @endsection
 
 @section('message')
-    Aqui você encontra a lista de todos os usuários cadastrados no sistema, fique livre para <code>editar</code> ou <code>remover</code>.
+    Aqui você encontra a lista de todas as questões cadastrados no sistema, fique livre para <code>editar</code> ou <code>remover</code>.
 @endsection
 
 @section('content')

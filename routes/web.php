@@ -48,15 +48,30 @@ Route::resource('/usuarios', 'UserController', [
     ]
 ]);
 
-Route::resource('/avaliacoes', 'AssessmentsController', [
+Route::resource('/atividades', 'AssessmentsController', [
     'names' => [
-        'index' => 'Assessments',
-        'store' => 'Assessments.store',
-        'create' => 'Assessments.create',
-        'show' => 'Assessments.show',
-        'destroy' => 'Assessments.destroy',
-        'update' => 'Assessments.update',
-        'edit' => 'Assessments.edit',
+        'index' => 'assessments',
+        'store' => 'assessments.store',
+        'create' => 'assessments.create',
+        'show' => 'assessments.show',
+        'destroy' => 'assessments.destroy',
+        'update' => 'assessments.update',
+        'edit' => 'assessments.edit',
+    ],
+    'except' => [
+
+    ]
+]);
+
+Route::resource('/questoes', 'QuestionsController', [
+    'names' => [
+        'index' => 'questions',
+        'store' => 'questions.store',
+        'create' => 'questions.create',
+        'show' => 'questions.show',
+        'destroy' => 'questions.destroy',
+        'update' => 'questions.update',
+        'edit' => 'questions.edit',
     ],
     'except' => [
 
