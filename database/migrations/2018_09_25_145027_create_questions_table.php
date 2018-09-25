@@ -15,6 +15,15 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('activities_id')->unsigned();
+            $table->foreign('activities_id')->references('id')->on('activities')->onDelete('cascade');
+            $table->string('content_of_question');
+            $table->string('image');
+            $table->string('a');
+            $table->string('b');
+            $table->string('c');
+            $table->string('d');
+            $table->string('answer');
             $table->timestamps();
         });
     }
