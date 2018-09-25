@@ -3,9 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Repositories\ActivitiesRepositoryRepositoryEloquent;
 
 class AssessmentsController extends Controller
 {
+    /**
+     * @var ActivitiesRepositoryRepositoryEloquent
+     */
+    private $activities;
+
+    public function __construct(ActivitiesRepositoryRepositoryEloquent $activities)
+    {
+        $this->activities = $activities;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +24,9 @@ class AssessmentsController extends Controller
      */
     public function index()
     {
-        return view('assessments.index');
+      $activities = $this->activities->all();
+
+        return view('assessments.index', ['activities' => $activities]);
     }
 
     /**

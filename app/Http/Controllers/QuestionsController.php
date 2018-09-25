@@ -2,10 +2,19 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Repositories\QuestionsRepositoryRepositoryEloquent;
 use Illuminate\Http\Request;
 
 class QuestionsController extends Controller
 {
+    private $questions;
+
+    public  function  __construct(QuestionsRepositoryRepositoryEloquent $questions)
+    {
+        $this->questions = $questions;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +22,8 @@ class QuestionsController extends Controller
      */
     public function index()
     {
-        return view('questions/index');
+        $questions  = $this->questions->all();
+        return view('questions/index', ['questions' => $questions]);
     }
 
     /**
@@ -23,6 +33,7 @@ class QuestionsController extends Controller
      */
     public function create()
     {
+
        return view('questions/create');
     }
 

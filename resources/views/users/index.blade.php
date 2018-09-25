@@ -8,7 +8,8 @@
 @endsection
 
 @section('message')
-    Aqui você encontra a lista de todos os usuários cadastrados no sistema, fique livre para <code>editar</code> ou <code>remover</code>.
+    Aqui você encontra a lista de todos os usuários cadastrados no sistema, fique livre para <code>editar</code> ou
+    <code>remover</code>.
 @endsection
 
 @section('content')
@@ -27,13 +28,18 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                @if(isset($users))
+                    @foreach($users as $user)
+                        <tr>
+                            <th>{{$user->id}} </th>
+                            <td>{{$user->name}}</td>
+                            <td>{{$user->email}}</td>
+                            <td>em desenvolvimento</td>
+                            <td></td>
+                        </tr>
+                    @endforeach
+                @endif
+
                 </tbody>
             </table>
 

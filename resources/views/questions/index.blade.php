@@ -8,7 +8,8 @@
 @endsection
 
 @section('message')
-    Aqui você encontra a lista de todas as questões cadastrados no sistema, fique livre para <code>editar</code> ou <code>remover</code>.
+    Aqui você encontra a lista de todas as questões cadastrados no sistema, fique livre para <code>editar</code> ou
+    <code>remover</code>.
 @endsection
 
 @section('content')
@@ -20,20 +21,18 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Editar</th>
-                    <th>Remover</th>
+                    <th>Descrisão</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                @if(assert($questions))
+                    @foreach($questions as $question)
+                        <tr>
+                            <th scope="row">{{$question->id}}</th>
+                            <td>{{$question->content_of_question}}</td>
+                        </tr>
+                    @endforeach
+                @endif
                 </tbody>
             </table>
 

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Questions extends Model
 {
-    use TransformableTrait;
+
     /**
      * The attributes that are mass assignable.
      *

@@ -3,9 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Repositories\UserRepositoryRepositoryEloquent;
 
 class UserController extends Controller
 {
+
+
+    /**
+     * @var UserRepositoryRepositoryEloquent
+     */
+    private $user;
+
+    public  function  __construct(UserRepositoryRepositoryEloquent $user)
+    {
+        $this->user = $user;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +26,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('users/index');
+        $users = $this->user->all();
+
+        return view('users/index',  ['users' =>  $users]);
+
     }
 
     /**
