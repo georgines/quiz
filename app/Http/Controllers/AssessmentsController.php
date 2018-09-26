@@ -47,7 +47,9 @@ class AssessmentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+            $this->activities->create($request->all());
+        return redirect()->route('assessments');
     }
 
     /**

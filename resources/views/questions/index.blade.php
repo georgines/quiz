@@ -22,6 +22,8 @@
                 <tr>
                     <th>ID</th>
                     <th>Descrisão</th>
+                    <th>Editar</th>
+                    <th>Deletar</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -30,6 +32,8 @@
                         <tr>
                             <th scope="row">{{$question->id}}</th>
                             <td>{{$question->content_of_question}}</td>
+                            <td>em desenvolvimento</td>
+                            <td></td>
                         </tr>
                     @endforeach
                 @endif

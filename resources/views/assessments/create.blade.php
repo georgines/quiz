@@ -16,7 +16,8 @@
     <div class="card">
         <div class="card-body">
             <br>
-            <form>
+            {!! Form::open(['route' => 'assessments.store', 'method' => 'post']) !!}
+            {!! Form::token() !!}
                 <div class="form-row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -29,13 +30,13 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="zmdi zmdi-calendar"></i></span>
                             </div>
-                            {{--<input type="date" class="form-control hidden-md-up" placeholder="Pick a date">--}}
-                            <input type="text" name="date" class="form-control date-picker " placeholder="Data de execução">
+                            <input type="date" class="form-control" name="date" placeholder="Pick a date" >
+                            {{--<input type="text" name="date" class="form-control date-picker " placeholder="Data de execução">--}}
                         </div>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Cadastrar</button>
-            </form>
+            {!! Form::close() !!}
         </div>
     </div>
 @endsection

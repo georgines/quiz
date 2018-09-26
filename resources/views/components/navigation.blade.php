@@ -22,6 +22,7 @@
         <ul>
             <li><a href="{{route('questions')}}">Listar</a></li>
             <li><a href="{{route('questions.create')}}">Cadastrar</a></li>
+            <li><a href="{{route('questions.solve')}}">Resolver</a></li>
         </ul>
     </li>
 

@@ -77,4 +77,13 @@ Route::resource('/questoes', 'QuestionsController', [
 
     ]
 ]);
+Route::get('/questoes/resolver',[
+    'as' => 'questions.solve', 'uses' => 'QuestionsController@showQuestions'
+]);
+
+Route::post('/questoes/resultado',[
+    'as' => 'questions.result', 'uses' => 'QuestionsController@result'
+]);
+
+
 
