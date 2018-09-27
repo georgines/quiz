@@ -3,10 +3,16 @@
 namespace App\Http\Controllers;
 
 
+use App\Repositories\PerformanceRepositoryEloquent;
 use App\Repositories\QuestionsRepositoryRepositoryEloquent;
 use App\Repositories\ActivitiesRepositoryRepositoryEloquent;
+use App\Repositories\UserRepositoryRepositoryEloquent;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Auth;
+use Illuminate\Auth\AuthManager;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -22,31 +28,52 @@ class QuestionsController extends Controller
      * @var Carbon
      */
     private $carbon;
+    /**
+     * @var User
+     */
+    private $user;
+    /**
+     * @var Auth
+     */
+    private $auth;
+    /**
+     * @var AuthManager
+     */
+    private $authManager;
+    /**
+     * @var UserRepositoryRepositoryEloquent
+     */
+    private $userRepositoryRepositoryEloquent;
+    /**
+     * @var PerformanceRepositoryEloquent
+     */
+    private $performance;
 
-    public function __construct(QuestionsRepositoryRepositoryEloquent $questions,
-                                ActivitiesRepositoryRepositoryEloquent $activities, Carbon $carbon)
+    public function __construct(
+        QuestionsRepositoryRepositoryEloquent $questions,
+        ActivitiesRepositoryRepositoryEloquent $activities,
+        Carbon $carbon,
+        AuthManager $authManager,
+        UserRepositoryRepositoryEloquent $user,
+        PerformanceRepositoryEloquent $performance
+    )
     {
         $this->questions = $questions;
         $this->activities = $activities;
         $this->carbon = $carbon;
+        $this->user = $user;
+        $this->authManager = $authManager;
+        $this->performance = $performance;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $questions = $this->questions->all();
         return view('questions/index', ['questions' => $questions]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         $datas = $this->activities->all();
@@ -54,12 +81,7 @@ class QuestionsController extends Controller
         return view('questions/create', ['datas' => $datas]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
 
@@ -72,7 +94,11 @@ class QuestionsController extends Controller
         if (Storage::disk('s3')->exists($path)) {
 
             $url = 'https://s3-sa-east-1.amazonaws.com/guitterquiz/' . $path;
-            $answer = 'a';
+            // TODO fazer importação da imagem de resposta
+            $url_r = 'https://s3-sa-east-1.amazonaws.com/guitterquiz/' . $path;
+            $url_r = Crypt::encryptString($url_r);
+            $answer = Crypt::encryptString(strtolower($request->input('answer')));
+
             $to_save = [
                 'activities_id' => $request->input('activities_id'),
                 'content_of_question' => $request->input('content_of_question'),
@@ -81,6 +107,8 @@ class QuestionsController extends Controller
                 'c' => $request->input('c'),
                 'd' => $request->input('d'),
                 'image' => $url,
+                'image_r' => $url_r,
+                'tip' => $request->input('tip'),
                 'answer' => $answer
             ];
             $this->questions->create($to_save);
@@ -93,59 +121,144 @@ class QuestionsController extends Controller
         return redirect()->route('assessments');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         return view('questions/edit');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
-        //
+         $result = $this->questions->delete($id);
+        if ($result) {
+            return redirect()->route('questions');
+            // Todo criar mensagem de sucesso na sessao
+        }else{
+            // Todo criar mensagem de não foi possivel deletar
+            return redirect()->back();
+        }
+
     }
 
 
-    public function showQuestions()
+    public function showquestions()
     {
+        $date = $this->carbon->now()->format('Y-m-d');
+        $data = $this->activities->findWhere(['date' => $date])->toArray();
 
+        $performance = $this->authManager->user()->performance;
+
+        if (sizeof($performance) >= 1) {
+            foreach ($performance as $perform) {
+                if ($perform['date'] == $date) {
+                    return redirect()->route('dashboard');
+                    // TODO colocar mensagem de nenhum questionario disponivel
+                }
+            }
+        }
+
+        if (sizeof($data) >= 1) {
+            $id = $data[0]['id'];
+        } else {
+            $id = 0;
+
+        }
+
+        $activitie = $this->activities->find($id);
+
+        $questions = $activitie->questions()->get()->toArray();
+        if (sizeof($questions) < 1) {
+            return redirect()->route('dashboard');
+            // TODO colocar mensagem de nenhum questionario disponivel
+        }
+
+        $length = sizeof($questions);
+        return view('questions/solve', ['questions' => $questions, 'length' => $length, 'activitie' => $activitie]);
     }
 
-    public function result()
+    public function result(Request $request)
     {
+        $date = $this->carbon->now()->format('Y-m-d');
+        $length = $request->input('length');
+        $total = 0;
+        if ($length) {
+            $result = [];
+            for ($i = 0; $i < $length; $i++) {
+                $ra = $request->input('ra_' . ($i + 1)) == "on" ? 1 : 0;
+                $rb = $request->input('rb_' . ($i + 1)) == "on" ? 1 : 0;
+                $rc = $request->input('rc_' . ($i + 1)) == "on" ? 1 : 0;
+                $rd = $request->input('rd_' . ($i + 1)) == "on" ? 1 : 0;
+                $a = $request->input('a_' . ($i + 1));
+                $b = $request->input('b_' . ($i + 1));
+                $c = $request->input('c_' . ($i + 1));
+                $d = $request->input('d_' . ($i + 1));
+                $content_of_question = $request->input('content_of_question_' . ($i + 1));
+
+
+                $answer = Crypt::decryptString($request->input('answer_' . ($i + 1)));
+                $image_r = Crypt::decryptString($request->input('image_r_' . ($i + 1)));
+
+                $to_eliminate = $ra + $rb + $rc + $rd;
+                $status =
+                $result[$i] = [
+
+                    'a' => $a,
+                    'b' => $b,
+                    'c' => $c,
+                    'd' => $d,
+                    'ra' => $ra,
+                    'rb' => $rb,
+                    'rc' => $rc,
+                    'rd' => $rd,
+                    'answer' => $answer,
+                    'image_r' => $image_r,
+                    'to_eliminate' => $to_eliminate,
+                    'content_of_question' => $content_of_question,
+
+
+                ];
+
+                if ($result[$i]['to_eliminate'] == 1) {
+
+                    if ($result[$i]['r' . $result[$i]['answer']] == 1) {
+                        $result[$i]['status'] = 'Acertou';
+                        $total += 1;
+                    } else {
+                        $result[$i]['status'] = 'Errou';
+                    }
+
+                } elseif ($result[$i]['to_eliminate'] < 1) {
+                    $result[$i]['status'] = 'Inválida, não marcou nenhuma alternativa';
+                } elseif ($result[$i]['to_eliminate'] > 1) {
+                    $result[$i]['status'] = 'Inválida, marcou mais de uma alternativa';
+                }
+
+
+            }
+
+            //
+
+        }
+
+        $note = ($total / $length) * 100;
+        $to_save = ['note' => $note, 'date' => $date, 'resolved' => '1'];
+
+        $this->authManager->user()->performance()->create($to_save);
+
+        return view('questions/result', ['result' => $result, 'length' => $length, 'total' => $total]);
+
 
     }
 }

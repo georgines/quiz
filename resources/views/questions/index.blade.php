@@ -33,7 +33,12 @@
                             <th scope="row">{{$question->id}}</th>
                             <td>{{$question->content_of_question}}</td>
                             <td>em desenvolvimento</td>
-                            <td></td>
+                            <td>
+                                {!!Form::open(['route'=>['questions.destroy', $question->id], 'method'=>'DELETE'])!!}
+                                <button type="submit"  class="btn btn-danger">Deletar</button>
+                                {!!Form::close()!!}
+
+                            </td>
                         </tr>
                     @endforeach
                 @endif
@@ -42,20 +47,20 @@
 
 
         </div>
-        <nav>
-            <ul class="pagination justify-content-center">
-                <li class="page-item pagination-first"><a class="page-link" href="#"></a></li>
-                <li class="page-item pagination-prev"><a class="page-link" href="#"></a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item"><a class="page-link" href="#">6</a></li>
-                <li class="page-item pagination-next"><a class="page-link" href="#"></a></li>
-                <li class="page-item pagination-last"><a class="page-link" href="#"></a></li>
-            </ul>
-        </nav>
+        {{--<nav>--}}
+            {{--<ul class="pagination justify-content-center">--}}
+                {{--<li class="page-item pagination-first"><a class="page-link" href="#"></a></li>--}}
+                {{--<li class="page-item pagination-prev"><a class="page-link" href="#"></a></li>--}}
+                {{--<li class="page-item"><a class="page-link" href="#">1</a></li>--}}
+                {{--<li class="page-item"><a class="page-link" href="#">2</a></li>--}}
+                {{--<li class="page-item"><a class="page-link" href="#">3</a></li>--}}
+                {{--<li class="page-item"><a class="page-link" href="#">4</a></li>--}}
+                {{--<li class="page-item"><a class="page-link" href="#">5</a></li>--}}
+                {{--<li class="page-item"><a class="page-link" href="#">6</a></li>--}}
+                {{--<li class="page-item pagination-next"><a class="page-link" href="#"></a></li>--}}
+                {{--<li class="page-item pagination-last"><a class="page-link" href="#"></a></li>--}}
+            {{--</ul>--}}
+        {{--</nav>--}}
     </div>
 @endsection
 

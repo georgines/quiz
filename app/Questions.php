@@ -20,7 +20,9 @@ class Questions extends Model
         'b',
         'c',
         'd',
-        'answer'
+        'answer',
+        'tip',
+        'image_r'
     ];
 
     /**

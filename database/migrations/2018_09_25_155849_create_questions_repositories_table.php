@@ -20,6 +20,8 @@ class CreateQuestionsRepositoriesTable extends Migration
 
             $table->timestamps();
 		});
+
+
 	}
 
 	/**

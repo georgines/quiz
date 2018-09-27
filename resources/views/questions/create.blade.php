@@ -56,63 +56,59 @@
             </div>
             <br>
             <div class="form-row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="a" placeholder="A">
+                        <input type="text" class="form-control" name="a" placeholder="texto da letra a)">
                         <i class="form-group__bar"></i>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="checkbox checkbox--inline">
-                        <input type="checkbox" name="ra" id="customCheck1">
-                        <label class="checkbox__label" for="customCheck1">Marque esta, se for a reposta
-                            correta</label>
+            </div>
+            <div class="form-row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="b" placeholder="texto da letra  b)">
+                        <i class="form-group__bar"></i>
                     </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="c" placeholder="texto da letra  c)">
+                        <i class="form-group__bar"></i>
+                    </div>
+                </div>
+            </div>
 
-                </div>
-            </div>
             <div class="form-row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="b" placeholder="B">
+                        <input type="text" class="form-control" name="d" placeholder="texto da letra  d)">
                         <i class="form-group__bar"></i>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="checkbox checkbox--inline">
-                        <input type="checkbox" name="rb" id="customCheck2">
-                        <label class="checkbox__label" for="customCheck2">Marque esta, se for a reposta
-                            correta</label>
                     </div>
                 </div>
             </div>
             <div class="form-row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="c" placeholder="C">
+                        <input type="text" class="form-control" name="tip" placeholder="dica para resolução da questão">
                         <i class="form-group__bar"></i>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="checkbox checkbox--inline">
-                        <input type="checkbox" name="rc" id="customCheck3">
-                        <label class="checkbox__label" for="customCheck3">Marque esta, se for a reposta
-                            correta</label>
                     </div>
                 </div>
             </div>
             <div class="form-row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="d" placeholder="D">
+                        <input type="text" class="form-control" name="answer" placeholder="resposta em letra minúscula, Bx: c">
                         <i class="form-group__bar"></i>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="checkbox checkbox--inline">
-                        <input type="checkbox" name="rd" id="customCheck4">
-                        <label class="checkbox__label" for="customCheck4">Marque esta, se for a reposta
-                            correta</label>
+            </div>
+            <div class="form-row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1">insira a imagem da resposta da questão, se necessário.</label>
+                        <input type="file" class="form-control-file" id="exampleFormControlFile1" name="image_r">
                     </div>
                 </div>
             </div>

@@ -23,9 +23,12 @@ class CreateQuestionsTable extends Migration
             $table->string('b');
             $table->string('c');
             $table->string('d');
-            $table->string('answer');
+            $table->longText('answer');
+            $table->longText('image_r');
+            $table->string('tip');
             $table->timestamps();
         });
+
     }
 
     /**
