@@ -19,6 +19,10 @@ class CreatePerformancesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('note');
             $table->string('date');
+            $table->string('discipline_name');
+            $table->string('total_resolved');
+            $table->string('number_of_questions');
+            $table->string('hit_percentage');
             $table->string('resolved');
             $table->timestamps();
         });

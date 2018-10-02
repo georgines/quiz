@@ -21,8 +21,13 @@
                 <div class="form-row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="name" placeholder="Nome da atividade. Ex: trigonometria" autofocus>
+                            {!! Form::text('name',null,['class'=>'form-control ' .($errors->has('name') ? "is-invalid": ""), 'placeholder'=>'Nome da atividade. Ex: trigonometria', 'autofocus']) !!}
                             <i class="form-group__bar"></i>
+                            @if ($errors->has('name'))
+                                <div class="invalid-tooltip">
+                                    {{ $errors->first('name') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -30,7 +35,14 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="zmdi zmdi-calendar"></i></span>
                             </div>
-                            <input type="date" class="form-control" name="date" placeholder="Pick a date" >
+                            {!! Form::date('date',null,['class'=>'form-control ' .($errors->has('date') ? "is-invalid": ""), 'placeholder'=>'Nome da atividade. Ex: trigonometria', 'autofocus']) !!}
+                            @if ($errors->has('date'))
+                                <div class="invalid-tooltip">
+                                    {{ $errors->first('date') }}
+                                </div>
+                            @endif
+
+
                             {{--<input type="text" name="date" class="form-control date-picker " placeholder="Data de execução">--}}
                         </div>
                     </div>

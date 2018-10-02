@@ -23,6 +23,7 @@
                         {!! Form::open(['route' => 'questions.result', 'method' => 'post'] ) !!}
                         {!! Form::token() !!}
                         <input type="text" hidden name="length" value="{{$length}}">
+                        <input type="text" hidden name="discipline_name" value="{{$activitie->name}}">
                         <button type="submit" class="btn btn-primary">Enviar Todas as Repostas</button>
                         <br>
                         <br>

@@ -8,8 +8,12 @@ class Performance extends Model
 {
     protected $fillable = [
         'user_id',
-        'note',
+        'discipline_name',
         'date',
+        'total_resolved',
+        'number_of_questions',
+        'note',
+        'hit_percentage',
         'resolved'
     ];
 

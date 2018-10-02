@@ -17,15 +17,15 @@ class CreateQuestionsTable extends Migration
             $table->increments('id');
             $table->integer('activities_id')->unsigned();
             $table->foreign('activities_id')->references('id')->on('activities')->onDelete('cascade');
-            $table->string('content_of_question');
-            $table->string('image');
+            $table->longText('content_of_question');
+            $table->longText('image');
             $table->string('a');
             $table->string('b');
             $table->string('c');
             $table->string('d');
             $table->longText('answer');
             $table->longText('image_r');
-            $table->string('tip');
+            $table->longText('tip');
             $table->timestamps();
         });
 

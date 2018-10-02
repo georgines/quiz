@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\UserRepositoryRepositoryEloquent;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -26,6 +27,9 @@ class UserController extends Controller
      */
     public function index()
     {
+        if (Gate::denies('admin')) {
+            return redirect()->route('dashboard');
+        }
         $users = $this->user->all();
 
         return view('users/index',  ['users' =>  $users]);
@@ -39,6 +43,9 @@ class UserController extends Controller
      */
     public function create()
     {
+        if (Gate::denies('admin')) {
+            return redirect()->route('dashboard');
+        }
         return view('users/create');
     }
 
@@ -50,6 +57,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        if (Gate::denies('admin')) {
+            return redirect()->route('dashboard');
+        }
 
     }
 
@@ -61,6 +71,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        if (Gate::denies('admin')) {
+            return redirect()->route('dashboard');
+        }
 
     }
 
@@ -72,6 +85,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        if (Gate::denies('admin')) {
+            return redirect()->route('dashboard');
+        }
         return view('users/edit');
     }
 
@@ -84,6 +100,9 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (Gate::denies('admin')) {
+            return redirect()->route('dashboard');
+        }
         //
     }
 
@@ -95,6 +114,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        if (Gate::denies('admin')) {
+            return redirect()->route('dashboard');
+        }
         //
     }
 }

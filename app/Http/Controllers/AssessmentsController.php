@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\ActivitiesRepositoryRepositoryEloquent;
+use Illuminate\Support\Facades\Gate;
 
 class AssessmentsController extends Controller
 {
@@ -24,6 +25,9 @@ class AssessmentsController extends Controller
      */
     public function index()
     {
+        if (Gate::denies('admin')) {
+            return redirect()->route('dashboard');
+        }
         $activities = $this->activities->all();
 
         return view('assessments.index', ['activities' => $activities]);
@@ -36,6 +40,9 @@ class AssessmentsController extends Controller
      */
     public function create()
     {
+        if (Gate::denies('admin')) {
+            return redirect()->route('dashboard');
+        }
         return view('assessments.create');
     }
 
@@ -47,6 +54,17 @@ class AssessmentsController extends Controller
      */
     public function store(Request $request)
     {
+        $rules = [
+            'name' => 'required',
+            'date' => 'required|unique:activities,date',
+        ];
+        $validatedData = $request->validate($rules);
+
+
+
+        if (Gate::denies('admin')) {
+            return redirect()->route('dashboard');
+        }
 
         $this->activities->create($request->all());
         return redirect()->route('assessments');
@@ -60,6 +78,9 @@ class AssessmentsController extends Controller
      */
     public function show($id)
     {
+        if (Gate::denies('admin')) {
+            return redirect()->route('dashboard');
+        }
         //
     }
 
@@ -71,6 +92,9 @@ class AssessmentsController extends Controller
      */
     public function edit($id)
     {
+        if (Gate::denies('admin')) {
+            return redirect()->route('dashboard');
+        }
         return view('assessments.edit');
     }
 
@@ -83,6 +107,9 @@ class AssessmentsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (Gate::denies('admin')) {
+            return redirect()->route('dashboard');
+        }
         //
     }
 
@@ -94,6 +121,9 @@ class AssessmentsController extends Controller
      */
     public function destroy($id)
     {
+        if (Gate::denies('admin')) {
+            return redirect()->route('dashboard');
+        }
         $result = $this->activities->delete($id);
         if ($result) {
             return redirect()->route('assessments');

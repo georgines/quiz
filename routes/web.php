@@ -6,7 +6,6 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('/inicio', 'DashboardController', [
         'names' => [
@@ -23,6 +22,10 @@ Route::group(['middleware' => ['auth']], function () {
         ]
 
     ]);
+});
+
+Route::group(['middleware' => ['auth']], function () {
+
 
     Route::resource('/usuarios', 'UserController', [
         'names' => [
@@ -69,8 +72,10 @@ Route::group(['middleware' => ['auth']], function () {
         ]
     ]);
 
+
+});
+Route::group(['middleware' => ['auth']], function () {
     Route::get('/resolver', 'QuestionsController@showquestions')->name('questions.solve');
     Route::post('/resolver/resultado', 'QuestionsController@result')->name('questions.result');
+    Route::get('/relatorio', 'ReportController@report')->name('questions.report');
 });
-
-

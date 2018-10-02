@@ -20,6 +20,7 @@
 
 
         <section class="content">
+
             @component('components.content-title')
                 @slot('title')
                     @yield('title')

@@ -165,6 +165,7 @@ return [
          */
         Collective\Html\HtmlServiceProvider::class,
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
+        App\Providers\AutorizationServicesProvider::class,
 
     ],
 
